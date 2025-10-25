@@ -1,0 +1,61 @@
+Step 1: Make problem more clear, if needed.
+
+1.1 Is there any list of all microservices and their difference in: Importance, Load, Risk, etc.
+    ** Load: Sort microservices based on Load.
+    ** Risk: Sort microservices based on Risk.
+    ** Business Continuity: Sort microservices based on Business Continuity
+    ** Importance: Sort microservices based on importace (using Load, Risk and Business Continuity)
+
+1.1 A: User Management / Financial Core / Ad Manager / CMS service / ... 
+
+1.2 What is the purpose of implementing observability tool?
+    ** IS there any business request for that? Or it is raised by technical team?
+
+1.2 A: Raised by technical side.
+
+1.3 Who is the owner of Implemented system? Who need to use the implemented tool?
+    ** For each type of owner we need to create seperate dashboard.
+1.3 A: Development Team: Need to have access to application related data - Seperate channel for alarms with owner
+    Infra Team: Need to have access to monitoring information and application related data - Seperate channer for alarms with owner
+
+
+Step 2: Define MVP and stages of project
+
+2.1 Define MVP of project
+    ** We should have a MVP which has added value and is deployable (using previous stage answers)
+
+Answer 2.1: A dashboard to have metrics from 
+* One VM (cpu, memmory, disk, IO) 
+* one service (all pods) (User Management) metrics (response time on EPs, P99 and P95 metric)
+
+
+Step 3: Select Tools
+
+3.1 Select Database for metrics
+3.1 A: Prometheus - Node Exporter - Open Telemetry plugin on application for application metrics
+
+3.2 Select Visualization Tool
+3.2 A: Grafana
+
+
+Step 4: List of tasks
+
+4.1 What are list of tasks to implement MVP with selected tools
+4.1 A: List of tasks:
+    1. Deploy Prometheus
+    2. Deploy Grafana and connect to Prometheus
+    3. Install Exporters (Node Exporter) and connect to Prometheus on staging server
+    4. Install Open Telemetry Exporter and connect to Prometheus on staging server
+    5. Configure Alarm system on Grafana and Implement seperate channels on Grafana (developer and Infra)
+    6. Create dashboard in Grafana for development team (EP Response Time / P95 / P99)
+    7. Create dashboard in Grafana for development team (CPU, Memmory, Disk)
+    8. Create Alarm criteria for error rate for developer channel / for infra channer on cpu, memmory, Disk
+    9. Test everything and solve problems.
+    10. Deploy on Production.
+
+
+Step 5: Define Next stage of project
+
+5.1 Add new services
+
+5.2 Add new metrics on dashboard

@@ -1,0 +1,3 @@
+Design a centralized observability tool for a distributed microservices application.
+Scale: 50 services, each usually 3 pods (≈150 pods total), C# applications, plus system components (ingress)
+Microservices: CMS service / Ad Manager / User Management / Financial Core / ...
