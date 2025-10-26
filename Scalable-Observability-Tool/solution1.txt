@@ -1,0 +1,79 @@
+Step 1: Clarify Context
+
+1.1 List of services - Scale and Criticality
+1.1A table of services which is sorted by scale and criticality (User Management > Financial Core > CMS)
+
+1.2 Who is the consumer (Owner) of implemented solution?
+    ** we should Consider Product, Technical, QA and all teams requests here.
+    ** each customer should have its own role and isolated dashboard.
+1.2A Development and Infra team needs it.
+    Development Team: Need to have access to application related data - Seperate channel for alarms with owner
+    Infra Team: Need to have access to monitoring information and application related data - Seperate channer for alarms with owner
+
+
+Step 2: Define MVP of project in details
+
+2.1 Define MVP of project
+    ** We should have a MVP which has added value and is deployable (using previous stage answers)
+
+2.1A A dashboard to have metrics from 
+* One VM (cpu, memmory, disk, IO) 
+* one service (all pods) (User Management) metrics (response time on EPs, P99 and P95 metric)
+
+
+Step 3: Select Architecture and Tools
+
+3.1 Define Data Flow
+3.1A metrics -> Database for metrics -> Visualization tool
+
+3.2 Select Database for metrics
+3.2A Prometheus (Reason: Highly scalable, Kubernetes compatible) - Node Exporter - Open Telemetry plugin on application for application metrics
+
+3.3 Select Visualization Tool
+3.3A Grafana (Reason: Compatible with Prometheus)
+
+
+Step 4: Implementation Plan
+
+4.1 List of tasks to implement MVP (step 2) with selected tools (step 3)
+4.1A List of tasks:
+    1. Deploy Prometheus
+    2. Deploy Grafana and connect to Prometheus
+    3. Install Exporters (Node Exporter) and connect to Prometheus on staging server
+    4. Install Open Telemetry Exporter and connect to Prometheus on staging server
+    5. Configure Alarm system on Grafana and Implement seperate channels on Grafana (developer and Infra)
+    6. Create dashboard in Grafana for development team (EP Response Time / P95 / P99)
+    7. Create dashboard in Grafana for development team (CPU, Memmory, Disk)
+    8. Create Alarm criteria for error rate for developer channel / for infra channer on cpu, memmory, Disk
+    9. Test everything and solve problems.
+    10. Deploy on Production.
+
+
+Step 5: Security and Retention
+
+5.1 Which security points should be considered?
+5.1A Define RBAC (Ownership): Devs see app data; Infra sees node/system data. Each dashboard should has an admin.
+Secure endpoints (TLS, auth).
+Avoid noisy alerts.
+
+5.2 Retention Period
+5.2A How long we should and we can keep data?
+document and configure retention policy on application.
+
+
+Step 6: Next Phase & Scaling Plan
+
+5.1 Add new services
+5.1A Add logs (log shipping)
+Add other services
+Add All VMs
+
+5.2 Add new metrics on dashboard
+Add new metrics to our dashboard from our metrics (IO)
+Add Blackbox exporter
+Add Request Rate to application
+
+5.3 Scale system
+Think about hard disk
+Think about automation on scaling new instances
+Optimize scraping interval / Cordinality
